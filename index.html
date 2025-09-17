@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Sondage Collégiens</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+body { font-family: Arial; background: linear-gradient(135deg, #74ebd5, #ACB6E5); margin:0; padding:0;}
+.container { max-width: 700px; margin:auto; padding:20px; background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); border-radius: 20px; margin-top:30px; color:#fff;}
+h2 { text-align:center; }
+label { font-weight:bold; display:block; margin-top:10px; }
+input, select, textarea, button { width:100%; padding:10px; margin-top:5px; border-radius:10px; border:none; }
+button { background: rgba(255,255,255,0.25); color:#fff; cursor:pointer; font-weight:bold; margin-top:10px;}
+#result { margin-top:20px; text-align:center; font-size:18px; }
+#adminContainer { display:none; }
+canvas { background: rgba(255,255,255,0.2); border-radius:15px; margin-bottom:20px;}
+</style>
+</head>
+<body>
+
+<div class="container" id="formContainer">
+<h2>Sondage Collégiens</h2>
+<form id="surveyForm">
+
+<!-- 28 questions complètes -->
+
+<label>1. Classe :</label>
+<select name="Classe"><option>6e</option><option>5e</option><option>4e</option><option>3e</option></select>
+
+<label>2. Sexe :</label>
+<input type="radio" name="Sexe" value="Fille">Fille
+<input type="radio" name="Sexe" value="Garçon">Garçon
+<input type="radio" name="Sexe" value="Autre">Autre
+
+<label>3. Comment ça se passe au collège ?</label>
+<select name="AvisCollege"><option>Très bien</option><option>Bien</option><option>Moyen</option><option>Mal</option><option>Très mal</option></select>
+
+<label>4. Qu’est-ce que tu trouves le plus difficile ?</label>
+<input type="checkbox" name="Difficultes" value="Cours">Cours
+<input type="checkbox" name="Difficultes" value="Devoirs">Devoirs
+<input type="checkbox" name="Difficultes" value="Profs">Profs
+<input type="checkbox" name="Difficultes" value="Camarades">Camarades
+<input type="checkbox" name="Difficultes" value="Autre">Autre
+
+<label>5. Temps moyen pour les devoirs :</label>
+<select name="TempsDevoirs"><option>Moins de 30 min</option><option>30min-1h</option><option>1-2h</option><option>Plus de 2h</option></select>
+
+<label>6. Difficulté à suivre les cours :</label>
+<select name="DifficulteCours"><option>Oui souvent</option><option>Parfois</option><option>Rarement</option><option>Jamais</option></select>
+
+<label>7. Soutien des professeurs :</label>
+<select name="SoutienProfs"><option>Oui</option><option>Non</option><option>Parfois</option></select>
+
+<label>8. Règles du collège :</label>
+<select name="ReglesCollege"><option>Trop strictes</option><option>Correctes</option><option>Pas assez strictes</option></select>
+
+<label>9. Bien avec les camarades :</label>
+<select name="BienCamarades"><option>Oui</option><option>Non</option><option>Ça dépend</option></select>
+
+<label>10. Victime de moqueries/harcèlement :</label>
+<select name="Harcelement"><option>Oui souvent</option><option>Parfois</option><option>Rarement</option><option>Jamais</option></select>
+
+<label>11. Soutien des amis :</label>
+<select name="SoutienAmis"><option>Oui</option><option>Non</option><option>Parfois</option></select>
+
+<label>12. Adulte de confiance :</label>
+<select name="AdulteConfiance"><option>Oui</option><option>Non</option><option>Je ne sais pas</option></select>
+
+<label>13. Aimes-tu apprendre :</label>
+<select name="AimesApprendre"><option>Oui beaucoup</option><option>Un peu</option><option>Pas trop</option><option>Pas du tout</option></select>
+
+<label>14. Matière préférée :</label>
+<select name="MatierePreferee"><option>Math</option><option>Français</option><option>Histoire-Géo</option><option>Anglais</option><option>Sciences</option><option>EPS</option><option>Arts</option><option>Technologie</option><option>Autre</option></select>
+
+<label>15. Matière la plus difficile :</label>
+<select name="MatiereDifficile"><option>Math</option><option>Français</option><option>Histoire-Géo</option><option>Anglais</option><option>Sciences</option><option>EPS</option><option>Arts</option><option>Technologie</option><option>Autre</option></select>
+
+<label>16. Volume des devoirs :</label>
+<select name="VolumeDevoirs"><option>Trop nombreux</option><option>Corrects</option><option>Pas assez</option></select>
+
+<label>17. Stress aux contrôles :</label>
+<select name="StressControles"><option>Oui beaucoup</option><option>Un peu</option><option>Pas vraiment</option><option>Pas du tout</option></select>
+
+<label>18. Travaille mieux :</label>
+<select name="TravailleMieux"><option>Maison seul(e)</option><option>Avec un ami</option><option>En classe</option></select>
+
+<label>19. Dors-tu suffisamment ?</label>
+<select name="DorsSuffisamment"><option>Oui</option><option>Non</option><option>Ça dépend</option></select>
+
+<label>20. Temps sur téléphone :</label>
+<select name="TempsTelephone"><option>&lt;1h</option><option>1-2h</option><option>2-4h</option><option>&gt;4h</option></select>
+
+<label>21. Sport :</label>
+<select name="Sport"><option>Oui régulièrement</option><option>Parfois</option><option>Jamais</option></select>
+
+<label>22. Stress/fatigue :</label>
+<select name="StressFatigue"><option>Oui</option><option>Non</option><option>Parfois</option></select>
+
+<label>23. Que voudrais-tu voir davantage ?</label>
+<input type="checkbox" name="VoirPlus" value="Activités">Activités
+<input type="checkbox" name="VoirPlus" value="Soutien scolaire">Soutien scolaire
+<input type="checkbox" name="VoirPlus" value="Écoute des élèves">Écoute des élèves
+<input type="checkbox" name="VoirPlus" value="Plus de liberté">Plus de liberté
+<input type="checkbox" name="VoirPlus" value="Autre">Autre
+
+<label>24. Besoin d’aide pour s’organiser ?</label>
+<select name="AideOrganisation"><option>Oui</option><option>Non</option><option>Peut-être</option></select>
+
+<label>25. Si tu pouvais changer une chose :</label>
+<textarea name="Changement" rows="2"></textarea>
+
+<label>26. Ce que tu trouves le mieux :</label>
+<textarea name="Mieux" rows="2"></textarea>
+
+<label>27. Ce que tu trouves le moins bien :</label>
+<textarea name="MoinsBien" rows="2"></textarea>
+
+<label>28. Idées pour améliorer :</label>
+<textarea name="Idees" rows="2"></textarea>
+
+<button type="button" onclick="submitSurvey()">Envoyer</button>
+</form>
+<div id="result"></div>
+<button onclick="openAdmin()">Page Admin</button>
+</div>
+
+<div class="container" id="adminContainer">
+<h2>Admin - Graphiques</h2>
+<label>Mot de passe :</label>
+<input type="password" id="adminPassword">
+<button onclick="loginAdmin()">Valider</button>
+<div id="charts"></div>
+</div>
+
+<script>
+const sheetdbUrl = "https://sheetdb.io/api/v1/6nl0enzku5u9l";
+
+function submitSurvey(){
+  const form = document.getElementById('surveyForm');
+  const data = {};
+  for(let el of form.elements){
+    if(el.name){
+      if(el.type==='radio' && !el.checked) continue;
+      if(el.type==='checkbox'){
+        if(el.checked){
+          if(data[el.name]) data[el.name]+=", "+el.value;
+          else data[el.name]=el.value;
+        }
+        continue;
+      }
+      data[el.name] = el.value;
+    }
+  }
+  fetch(sheetdbUrl,{method:'POST',headers:{'Content-Type':'application/json'},body: JSON.stringify({ data })})
+  .then(res=>res.json()).then(resp=>{document.getElementById('result').innerHTML="Merci pour votre participation !";form.reset();})
+  .catch(err=>{document.getElementById('result').innerHTML="Erreur, réessayez.";});
+}
+
+function openAdmin(){document.getElementById('formContainer').style.display='none';document.getElementById('adminContainer').style.display='block';}
+
+function loginAdmin(){
+  const pwd = document.getElementById('adminPassword').value;
+  if(pwd!=='Marius2013'){ alert("Mot de passe incorrect !"); return; }
+  document.getElementById('adminPassword').style.display='none';
+  document.querySelector("#adminContainer button").style.display='none';
+  fetchResults();
+}
+
+function fetchResults(){ fetch(sheetdbUrl).then(res=>res.json()).then(data=>{ generateCharts(data); }); }
+
+function generateCharts(data){
+  const chartsDiv = document.getElementById('charts'); chartsDiv.innerHTML="";
+  const questions = ["Classe","Sexe","AvisCollege","Difficultes","TempsDevoirs","DifficulteCours","SoutienProfs","ReglesCollege","BienCamarades","Harcelement","SoutienAmis","AdulteConfiance","AimesApprendre","MatierePreferee","MatiereDifficile","VolumeDevoirs","StressControles","TravailleMieux","DorsSuffisamment","TempsTelephone","Sport","StressFatigue","VoirPlus","AideOrganisation","Changement","Mieux","MoinsBien","Idees"];
+  questions.forEach(q=>{ createChart(chartsDiv,q,data); });
+}
+
+function createChart(parent, field, data){
+  const canvas = document.createElement('canvas'); parent.appendChild(canvas);
+  const counts = {};
+  data.forEach(row=>{
+    let val = row[field]; if(!val) return;
+    val.split(",").forEach(v=>{v=v.trim();if(counts[v]) counts[v]+=1; else counts[v]=1;});
+  });
+  new Chart(canvas,{type:'bar',data:{ labels:Object.keys(counts), datasets:[{label:field, data:Object.values(counts), backgroundColor:'rgba(255,255,255,0.5)'}]},options:{responsive:true, plugins:{legend:{display:false}}, scales:{y:{beginAtZero:true}}}});
+}
+</script>
+</body>
+</html>
